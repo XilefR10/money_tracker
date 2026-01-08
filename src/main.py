@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-import functions
+from . import functions
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -442,7 +442,13 @@ class MoneyTrackerApp:
         if messagebox.askyesno("Exit", "Do you want to exit?"):
             self.root.quit()
 
-if __name__ == "__main__":
+
+def run():
+    """Entry point for the Money Tracker application."""
     root = tk.Tk()
     app = MoneyTrackerApp(root)
     root.mainloop()
+
+
+if __name__ == "__main__":
+    run()

@@ -59,6 +59,8 @@ def main():
     print("\n[*] Building executable...")
     print("    This may take a few minutes...")
     
+    # Build the executable from src/main.py
+    src_main = os.path.join(base_dir, "src", "main.py")
     cmd = [
         sys.executable,
         "-m",
@@ -66,7 +68,9 @@ def main():
         "--onefile",
         "--windowed",
         "--name=MoneyTracker",
-        "main.py"
+        "--add-data",
+        f"{os.path.join(base_dir, 'src')}:src",
+        src_main
     ]
     
     result = subprocess.run(cmd, cwd=base_dir)

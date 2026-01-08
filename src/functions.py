@@ -3,17 +3,36 @@ import os
 
 # ===== DATA MANAGEMENT =====
 
+def get_data_path():
+    """Get the path to data.json file."""
+    # Try data folder first (production/src structure)
+    data_folder = os.path.join(os.path.dirname(__file__), "..", "data")
+    data_file = os.path.join(data_folder, "data.json")
+    
+    if os.path.exists(data_file):
+        return data_file
+    
+    # Fallback to current directory (backward compatibility)
+    return "data.json"
+
 def load_data():
     """Load data from JSON file. Returns default data if file doesn't exist."""
-    if os.path.exists("data.json"):
-        with open("data.json", "r") as f:
+    data_path = get_data_path()
+    if os.path.exists(data_path):
+        with open(data_path, "r") as f:
             return json.load(f)
     return {"money": 1000, "spent": []}
 
 def save_data(money, spent):
     """Save money and spent list to JSON file."""
     data = {"money": money, "spent": spent}
-    with open("data.json", "w") as f:
+    data_path = get_data_path()
+    
+    # Create data directory if it doesn't exist
+    data_dir = os.path.dirname(data_path)
+    os.makedirs(data_dir, exist_ok=True)
+    
+    with open(data_path, "w") as f:
         json.dump(data, f, indent=2)
 
 # ===== FILTERING FUNCTIONS =====
