@@ -1,23 +1,17 @@
 {
-  "money": 5200,
+  "money": 1350,
   "spent": [
     {
       "type": "income",
-      "amount": 100,
-      "category": "nudes",
-      "text": "porn"
-    },
-    {
-      "type": "spending",
-      "amount": 100,
-      "category": "gay",
-      "text": "porn"
+      "amount": 200,
+      "category": "salary",
+      "text": "nigger"
     },
     {
       "type": "income",
-      "amount": 200,
-      "category": "a",
-      "text": "a"
+      "amount": 150,
+      "category": "salary",
+      "text": "of"
     }
   ]
 }

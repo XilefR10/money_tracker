@@ -36,20 +36,46 @@ When you run the program, you start with a balance of $1000. Follow the prompts 
 ```
 What do you want to do? (add/total/cat_total/average/cat_average/highest_spent/exit)
 >> add
-How much did you spent?
->> 50
-What category?
->> Food
-Add a name
->> Groceries
+# Money Tracker
+
+A small GUI application to track incomes and spendings, analyze totals, and visualize data.
+
+**Features**
+- Add Entry (spending or income) with amount, category, description
+- View Total (earned, spent, remaining)
+- View Chart (bar + pie chart for income vs spending)
+- View All (grouped by type and by category)
+- Category Total & Category Average
+- Highest Spending / Highest Income
+- Average Spending (spendings only) and Average Income
+- Delete Entry, Set Money, Clear All
+
+**Install**
+1. (Optional) create and activate a virtual environment
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate
+   ```
+2. Upgrade packaging tools and install dependencies (uses binary wheels where possible):
+   ```powershell
+   python -m pip install --upgrade pip setuptools wheel
+   pip install --only-binary=:all: -r requirements.txt
+   ```
+3. If installation fails while building packages (numpy/matplotlib), either re-run the command with `--only-binary` or install the Visual C++ Build Tools from Microsoft.
+
+Note: `tkinter` is included with standard CPython on Windows; no extra install is required for it.
+
+**Run**
+```powershell
+python main.py
 ```
 
-## Requirements
+The app opens a window. Use the buttons to add entries, view summaries, charts, and the full report.
 
-- Python 3.x
+**Files**
+- [main.py](main.py) — GUI application
+- [functions.py](functions.py) — core data operations
+- [requirements.txt](requirements.txt) — external dependencies (matplotlib, numpy)
+- [data.json](data.json) — persistent data file created/updated by the app
 
-## Files
-
-- `main.py` - Main application loop
-- `functions.py` - Core functionality for all features
-- `README.md` - This file
+If you'd like, I can add screenshots to this README or wire the `view_all` output into a printable/exportable text file.

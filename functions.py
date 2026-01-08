@@ -98,13 +98,62 @@ def highest_income(spent):
 # ===== ANALYSIS FUNCTIONS =====
 
 def average(spent):
-    """Calculate and display average spending across all entries."""
-    money = 0
+    """Calculate and display average spending across all entries (spendings only)."""
+    total = 0
     count = 0
     for i in spent:
-        money += i["amount"]
-    average_spent = money / count if count > 0 else 0
+        if i.get("type") == "spending":
+            total += i["amount"]
+            count += 1
+    average_spent = total / count if count > 0 else 0
     print("Your average spending is:", average_spent)
+
+def average_income(spent):
+    """Calculate and display average income across income entries."""
+    total = 0
+    count = 0
+    for i in spent:
+        if i.get("type") == "income":
+            total += i["amount"]
+            count += 1
+    average_inc = total / count if count > 0 else 0
+    print("Your average income is:", average_inc)
+
+def view_all_entries(spent):
+    """Return and print a formatted report of all entries grouped by
+    type (income/spending) and by category within each type.
+
+    Returns the report string so callers (including a GUI) can display it.
+    """
+    if not spent:
+        report = "No entries."
+        print(report)
+        return report
+
+    grouped = {}
+    for e in spent:
+        t = e.get("type", "unknown")
+        cat = e.get("category", "(uncategorized)")
+        grouped.setdefault(t, {}).setdefault(cat, []).append(e)
+
+    lines = []
+    for t in ["income", "spending"]:
+        lines.append(f"{t.title()} entries:")
+        type_groups = grouped.get(t, {})
+        if not type_groups:
+            lines.append("  (none)")
+            lines.append("")
+            continue
+        for cat, entries in type_groups.items():
+            total = sum(x.get("amount", 0) for x in entries)
+            lines.append(f"  Category: {cat}    Total: ${total}")
+            for ent in entries:
+                lines.append(f"    - {ent}")
+        lines.append("")
+
+    report = "\n".join(lines)
+    print(report)
+    return report
 
 def cat_average(spent):
     """Calculate and display average spending for a specific category."""
