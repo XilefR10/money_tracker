@@ -8,50 +8,132 @@ class MoneyTrackerApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Money Tracker")
-        self.root.geometry("500x600")
+        self.root.geometry("800x700")
+        self.root.configure(bg="#f0f0f0")
         
         # Load data from JSON file
         data = functions.load_data()
         self.money = data["money"]
         self.spent = data["spent"]
         
-        # Title
-        title = tk.Label(root, text="Money Tracker", font=("Arial", 24, "bold"))
+        # === HEADER ===
+        header_frame = tk.Frame(root, bg="#2c3e50", height=100)
+        header_frame.pack(fill=tk.X, padx=0, pady=0)
+        header_frame.pack_propagate(False)
+        
+        title = tk.Label(header_frame, text="💰 Money Tracker", font=("Arial", 28, "bold"), 
+                        bg="#2c3e50", fg="white")
         title.pack(pady=10)
         
-        # Money display
-        self.money_label = tk.Label(root, text=f"Current Money: ${self.money}", font=("Arial", 14))
-        self.money_label.pack(pady=10)
+        # Money display - prominent card style
+        money_frame = tk.Frame(header_frame, bg="#27ae60", relief=tk.RAISED, bd=2)
+        money_frame.pack(pady=8, padx=20, fill=tk.X)
         
-        # Buttons frame
-        button_frame = tk.Frame(root)
-        button_frame.pack(pady=20, padx=10, fill=tk.BOTH, expand=True)
+        self.money_label = tk.Label(money_frame, text=f"${self.money}", font=("Arial", 36, "bold"),
+                                   bg="#27ae60", fg="white")
+        self.money_label.pack(side=tk.LEFT, padx=20, pady=10)
         
-        # Button configurations
-        buttons = [
-            ("Add Entry", self.add_entry),
-            ("View Total", self.view_total),
-            ("View Chart", self.view_chart),
-            ("View All", self.view_all),
-            ("Category Total", self.category_total),
-            ("Highest Spending", self.highest_spent),
-            ("Highest Income", self.highest_income),
-            ("Average Spending", self.average_spending),
-            ("Category Average", self.category_average),
-            ("Delete Entry", self.delete_entry_gui),
-            ("Set Money", self.set_money_gui),
-            ("Clear All", self.clear_all),
-            ("Exit", self.exit_app),
+        money_text = tk.Label(money_frame, text="Current Balance", font=("Arial", 12),
+                            bg="#27ae60", fg="white")
+        money_text.pack(side=tk.LEFT, padx=0, pady=10)
+        
+        # === MAIN CONTENT ===
+        main_frame = tk.Frame(root, bg="#f0f0f0")
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=15, pady=15)
+        
+        # === SECTION 1: ADD & QUICK VIEW ===
+        section1_title = tk.Label(main_frame, text="Quick Actions", font=("Arial", 12, "bold"),
+                                 bg="#f0f0f0", fg="#2c3e50")
+        section1_title.grid(row=0, column=0, columnspan=3, sticky="w", pady=(0, 8))
+        
+        quick_buttons = [
+            ("➕ Add Entry", self.add_entry, "#3498db"),
+            ("📊 View Total", self.view_total, "#3498db"),
+            ("📈 Chart", self.view_chart, "#3498db"),
         ]
         
-        # Create buttons
-        for text, command in buttons:
-            btn = tk.Button(button_frame, text=text, command=command, font=("Arial", 11), 
-                           width=20, pady=10)
-            btn.pack(pady=5)
+        for i, (text, command, color) in enumerate(quick_buttons):
+            btn = self._create_button(main_frame, text, command, color, width=20)
+            btn.grid(row=1, column=i, padx=5, pady=5)
+        
+        # === SECTION 2: ANALYTICS ===
+        section2_title = tk.Label(main_frame, text="Analytics", font=("Arial", 12, "bold"),
+                                 bg="#f0f0f0", fg="#2c3e50")
+        section2_title.grid(row=2, column=0, columnspan=3, sticky="w", pady=(15, 8))
+        
+        analytics_buttons = [
+            ("⏱️ Timeline", self.view_money_timeline, "#9b59b6"),
+            ("📋 View All", self.view_all, "#9b59b6"),
+            ("🏷️ Category Total", self.category_total, "#9b59b6"),
+        ]
+        
+        for i, (text, command, color) in enumerate(analytics_buttons):
+            btn = self._create_button(main_frame, text, command, color, width=20)
+            btn.grid(row=3, column=i, padx=5, pady=5)
+        
+        # === SECTION 3: STATISTICS ===
+        section3_title = tk.Label(main_frame, text="Statistics", font=("Arial", 12, "bold"),
+                                 bg="#f0f0f0", fg="#2c3e50")
+        section3_title.grid(row=4, column=0, columnspan=3, sticky="w", pady=(15, 8))
+        
+        stats_buttons = [
+            ("💸 Highest Spend", self.highest_spent, "#e74c3c"),
+            ("💰 Highest Income", self.highest_income, "#e74c3c"),
+            ("📐 Avg Spending", self.average_spending, "#e74c3c"),
+        ]
+        
+        for i, (text, command, color) in enumerate(stats_buttons):
+            btn = self._create_button(main_frame, text, command, color, width=20)
+            btn.grid(row=5, column=i, padx=5, pady=5)
+        
+        # === SECTION 4: SETTINGS ===
+        section4_title = tk.Label(main_frame, text="Settings & Management", font=("Arial", 12, "bold"),
+                                 bg="#f0f0f0", fg="#2c3e50")
+        section4_title.grid(row=6, column=0, columnspan=3, sticky="w", pady=(15, 8))
+        
+        settings_buttons = [
+            ("📊 Category Avg", self.category_average, "#16a085"),
+            ("🗑️ Delete Entry", self.delete_entry_gui, "#c0392b"),
+            ("💵 Set Balance", self.set_money_gui, "#16a085"),
+        ]
+        
+        for i, (text, command, color) in enumerate(settings_buttons):
+            btn = self._create_button(main_frame, text, command, color, width=20)
+            btn.grid(row=7, column=i, padx=5, pady=5)
+        
+        # === SECTION 5: DANGER ZONE ===
+        danger_frame = tk.Frame(main_frame, bg="#f0f0f0")
+        danger_frame.grid(row=8, column=0, columnspan=3, sticky="ew", pady=(15, 0))
+        
+        clear_btn = self._create_button(danger_frame, "⚠️ Clear All Data", self.clear_all, "#e67e22", width=35)
+        clear_btn.pack(side=tk.LEFT, padx=5, pady=5)
+        
+        exit_btn = self._create_button(danger_frame, "❌ Exit", self.exit_app, "#c0392b", width=35)
+        exit_btn.pack(side=tk.LEFT, padx=5, pady=5)
+    
+    def _create_button(self, parent, text, command, color, width=20):
+        """Create a styled button with consistent appearance"""
+        btn = tk.Button(parent, text=text, command=command, 
+                       font=("Arial", 10, "bold"), width=width, pady=12,
+                       bg=color, fg="white", relief=tk.RAISED, bd=1,
+                       cursor="hand2", activebackground=self._lighten_color(color),
+                       activeforeground="white")
+        return btn
+    
+    def _lighten_color(self, color_hex):
+        """Lighten a hex color by a percentage"""
+        color_map = {
+            "#3498db": "#5dade2",
+            "#9b59b6": "#af7ac5",
+            "#e74c3c": "#ec7063",
+            "#16a085": "#48c9b0",
+            "#c0392b": "#e74c3c",
+            "#e67e22": "#f39c12",
+        }
+        return color_map.get(color_hex, color_hex)
     
     def update_money_display(self):
-        self.money_label.config(text=f"Current Money: ${self.money}")
+        self.money_label.config(text=f"${self.money}")
 
     def _modal_single_input(self, title, prompt):
         win = tk.Toplevel(self.root)
@@ -146,27 +228,14 @@ class MoneyTrackerApp:
         messagebox.showinfo("Success", f"Entry added: {data.get('text')}")
     
     def view_total(self):
-        money_spent = 0
-        money_earned = 0
-        
-        for entry in self.spent:
-            if entry["type"] == "spending":
-                money_spent += entry["amount"]
-            elif entry["type"] == "income":
-                money_earned += entry["amount"]
-        
-        message = f"You have earned: ${money_earned}\nYou have spent: ${money_spent}\nYou have left: ${self.money}"
+        totals = functions.get_totals(self.spent, self.money)
+        message = f"You have earned: ${totals['earned']}\nYou have spent: ${totals['spent']}\nYou have left: ${totals['balance']}"
         messagebox.showinfo("Total Money", message)
     
     def view_chart(self):
-        money_spent = 0
-        money_earned = 0
-        
-        for entry in self.spent:
-            if entry["type"] == "spending":
-                money_spent += entry["amount"]
-            elif entry["type"] == "income":
-                money_earned += entry["amount"]
+        chart_data = functions.get_chart_data(self.spent)
+        money_earned = chart_data["earned"]
+        money_spent = chart_data["spent"]
         
         # Create a new window for the chart
         chart_window = tk.Toplevel(self.root)
@@ -204,8 +273,55 @@ class MoneyTrackerApp:
         canvas.draw()
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
+    def view_money_timeline(self):
+        """Display money balance over time as a line graph."""
+        if not self.spent:
+            messagebox.showinfo("Money Over Time", "No entries to display.")
+            return
+        
+        # Calculate starting money by working backwards from current money
+        net_change = 0
+        for entry in self.spent:
+            if entry["type"] == "spending":
+                net_change -= entry["amount"]
+            else:  # income
+                net_change += entry["amount"]
+        
+        starting_money = self.money - net_change
+        timeline = functions.get_timeline_data(self.spent, starting_money)
+        
+        # Create a new window for the chart
+        chart_window = tk.Toplevel(self.root)
+        chart_window.title("Money Over Time")
+        chart_window.geometry("800x500")
+        
+        # Create figure and plot
+        fig, ax = plt.subplots(figsize=(10, 6))
+        
+        # Extract values and labels
+        money_amounts = [item[0] for item in timeline]
+        x_values = list(range(len(money_amounts)))
+        
+        # Plot line graph
+        ax.plot(x_values, money_amounts, marker='o', linestyle='-', linewidth=2, 
+                markersize=6, color='blue', label='Money Balance')
+        
+        ax.set_xlabel('Entry Number', fontsize=12)
+        ax.set_ylabel('Money Amount ($)', fontsize=12)
+        ax.set_title('Money Balance Over Time', fontsize=14, fontweight='bold')
+        ax.grid(True, alpha=0.3)
+        ax.legend()
+        
+        # Format y-axis as currency
+        ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'${x:.0f}'))
+        
+        # Embed chart in tkinter
+        canvas = FigureCanvasTkAgg(fig, master=chart_window)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
     def view_all(self):
-        report = functions.view_all_entries(self.spent)
+        report = functions.format_all_entries(self.spent)
         win = tk.Toplevel(self.root)
         win.title("All Entries")
         win.geometry("600x400")
@@ -228,35 +344,32 @@ class MoneyTrackerApp:
         if category is None:
             return
         
-        cat_money = 0
-        entries_list = []
+        cat_money = functions.calculate_category_total(self.spent, category)
+        entries_list = functions.get_entries_by_category(self.spent, category)
         
-        for entry in self.spent:
-            if category == entry["category"]:
-                cat_money += entry["amount"]
-                entries_list.append(str(entry))
+        if not entries_list:
+            messagebox.showinfo(f"Category: {category}", f"No entries found for this category.\n\nTotal: $0")
+            return
         
-        message = "\n".join(entries_list) + f"\n\nTotal: ${cat_money}"
+        message = "\n".join(str(entry) for entry in entries_list) + f"\n\nTotal: ${cat_money}"
         messagebox.showinfo(f"Category: {category}", message)
     
     def highest_spent(self):
-        spending_entries = [entry for entry in self.spent if entry.get("type") == "spending"]
+        highest_entry = functions.get_highest_spending_entry(self.spent)
         
-        if not spending_entries:
+        if not highest_entry:
             messagebox.showinfo("Highest Spending", "No spending entries available.")
             return
         
-        highest_entry = max(spending_entries, key=lambda x: x["amount"])
         messagebox.showinfo("Highest Spending", str(highest_entry))
     
     def highest_income(self):
-        income_entries = [entry for entry in self.spent if entry.get("type") == "income"]
+        highest_entry = functions.get_highest_income_entry(self.spent)
         
-        if not income_entries:
+        if not highest_entry:
             messagebox.showinfo("Highest Income", "No income entries available.")
             return
         
-        highest_entry = max(income_entries, key=lambda x: x["amount"])
         messagebox.showinfo("Highest Income", str(highest_entry))
     
     def average_spending(self):
@@ -264,8 +377,7 @@ class MoneyTrackerApp:
             messagebox.showinfo("Average", "No entries available.")
             return
         
-        total = sum(entry["amount"] for entry in self.spent)
-        average = total / len(self.spent)
+        average = functions.calculate_average_spending(self.spent)
         messagebox.showinfo("Average Spending", f"Your average spending is: ${average:.2f}")
     
     def category_average(self):
@@ -273,14 +385,13 @@ class MoneyTrackerApp:
         if category is None:
             return
         
-        cat_entries = [entry for entry in self.spent if entry["category"] == category]
+        cat_entries = functions.get_entries_by_category(self.spent, category)
         
         if not cat_entries:
             messagebox.showinfo("Category Average", f"No entries found for category '{category}'")
             return
         
-        total = sum(entry["amount"] for entry in cat_entries)
-        average = total / len(cat_entries)
+        average = functions.calculate_category_average(self.spent, category)
         messagebox.showinfo("Category Average", f"The average spending in category '{category}' is: ${average:.2f}")
     
     def delete_entry_gui(self):
@@ -288,7 +399,7 @@ class MoneyTrackerApp:
             messagebox.showinfo("Delete Entry", "No entries to delete.")
             return
         
-        entries_display = "\n".join([f"{i}: {entry}" for i, entry in enumerate(self.spent)])
+        entries_display = functions.format_entries_for_display(self.spent)
         messagebox.showinfo("Current Entries", entries_display)
         
         index_str = self._modal_single_input("Delete Entry", "Enter the index of the entry you want to delete:")

@@ -1,17 +1,4 @@
 {
-  "money": 1350,
-  "spent": [
-    {
-      "type": "income",
-      "amount": 200,
-      "category": "salary",
-      "text": "nigger"
-    },
-    {
-      "type": "income",
-      "amount": 150,
-      "category": "salary",
-      "text": "of"
-    }
-  ]
+  "money": 1000,
+  "spent": []
 }
