@@ -8,16 +8,16 @@ with open("README.md", "r", encoding="utf-8") as f:
 setup(
     name="money-tracker",
     version="1.0.0",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="XilefR10",
+    author_email="xilefr10@gmail.com",
     description="A modern GUI application for personal finance management",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/money_tracker",
+    url="https://github.com/XilefR10/money_tracker",
     project_urls={
-        "Bug Tracker": "https://github.com/yourusername/money_tracker/issues",
-        "Documentation": "https://github.com/yourusername/money_tracker/blob/main/README.md",
-        "Source Code": "https://github.com/yourusername/money_tracker",
+        "Bug Tracker": "https://github.com/XilefR10/money_tracker/issues",
+        "Documentation": "https://github.com/XilefR10/money_tracker/blob/main/README.md",
+        "Source Code": "https://github.com/XilefR10/money_tracker",
     },
     packages=find_packages(),
     classifiers=[

@@ -9,11 +9,11 @@ Before pushing to GitHub, make sure to customize these files with your informati
 ### 1. Update Documentation Links
 
 **In README.md:**
-- Line ~5: Replace `https://github.com/yourusername/money_tracker` with your actual URL
+- Line ~5: Replace `https://github.com/XilefR10/money_tracker` with your actual URL
 - Line ~18: Update the GitHub button links
 
 **In CONTRIBUTING.md:**
-- Search and replace `yourusername` with your GitHub username
+- Search and replace `XilefR10` with your GitHub username
 - Update all GitHub URLs to match your repository
 
 **In ABOUT.md:**
@@ -22,9 +22,9 @@ Before pushing to GitHub, make sure to customize these files with your informati
 
 **In setup.py:**
 ```python
-author="Your Name",
-author_email="your.email@example.com",
-url="https://github.com/yourusername/money_tracker",
+author="XilefR10",
+author_email="xilefr10@gmail.com",
+url="https://github.com/XilefR10/money_tracker",
 ```
 
 ### 2. Verify All Files Compile
@@ -58,7 +58,7 @@ git commit -m "Initial commit: Money Tracker GitHub repository"
 git branch -M main
 
 # Add remote repository
-git remote add origin https://github.com/yourusername/money_tracker.git
+git remote add origin https://github.com/XilefR10/money_tracker.git
 
 # Push to GitHub
 git push -u origin main

@@ -36,7 +36,7 @@ Thank you for your interest in contributing to Money Tracker! This document prov
 
 ```bash
 # Clone your fork
-git clone https://github.com/yourusername/money_tracker.git
+git clone https://github.com/XilefR10/money_tracker.git
 cd money_tracker
 
 # Create virtual environment

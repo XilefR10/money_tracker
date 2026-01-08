@@ -56,7 +56,7 @@ The application features:
 #### Steps
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/money_tracker.git
+   git clone https://github.com/XilefR10/money_tracker.git
    cd money_tracker
    ```
 

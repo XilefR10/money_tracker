@@ -22,7 +22,7 @@ Get Money Tracker up and running in minutes!
 
 ```bash
 # 1. Clone or download the project
-git clone https://github.com/yourusername/money_tracker.git
+git clone https://github.com/XilefR10/money_tracker.git
 cd money_tracker
 
 # 2. Install dependencies
@@ -38,7 +38,7 @@ python run.py
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/money_tracker.git
+git clone https://github.com/XilefR10/money_tracker.git
 cd money_tracker
 
 # 2. Create virtual environment (recommended)

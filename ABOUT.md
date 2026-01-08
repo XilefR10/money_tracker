@@ -37,7 +37,7 @@ To provide an easy-to-use, lightweight alternative to complex financial software
 
 ### For Developers
 ```bash
-git clone https://github.com/yourusername/money_tracker.git
+git clone https://github.com/XilefR10/money_tracker.git
 cd money_tracker
 pip install -r requirements.txt
 python run.py
