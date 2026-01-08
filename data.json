@@ -1,4 +1,23 @@
 {
-  "money": 5000,
-  "spent": []
+  "money": 5200,
+  "spent": [
+    {
+      "type": "income",
+      "amount": 100,
+      "category": "nudes",
+      "text": "porn"
+    },
+    {
+      "type": "spending",
+      "amount": 100,
+      "category": "gay",
+      "text": "porn"
+    },
+    {
+      "type": "income",
+      "amount": 200,
+      "category": "a",
+      "text": "a"
+    }
+  ]
 }
